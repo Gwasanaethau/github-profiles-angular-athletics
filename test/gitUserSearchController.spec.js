@@ -17,10 +17,21 @@ describe('when searching for a user', function(){
   beforeEach(module('GitUserSearch'));
 
   var ctrl;
+  var httpBackend;
+
+  beforeEach(inject(function($httpBackend) {
+    httpBackend = $httpBackend;
+    httpBackend
+      .when('GET', 'https://api.github.com/search/users?q=possum')
+      .respond(
+          { items: items }
+        );
+  }));
 
   beforeEach(inject(function($controller){
     ctrl = $controller('GitUserSearchController');
   }));
+
 
   var items = [
     {
@@ -36,8 +47,9 @@ describe('when searching for a user', function(){
   ];
 
   it('displays search results', function(){
-		ctrl.searchTerm = 'hello';
+		ctrl.searchTerm = 'possum';
 		ctrl.doSearch();
+    httpBackend.flush();
     expect(ctrl.searchResult.items).toEqual(items);
   });
 });
