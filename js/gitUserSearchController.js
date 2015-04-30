@@ -8,6 +8,6 @@ githubUserSearch.controller('GitUserSearchController', ['$resource' , function($
     self.searchResult = searchResource.get(
         {q: self.searchTerm}
       );
-    console.log(self.searchTerm);  
+    console.log(self.searchTerm);
   };
 }]);
